@@ -4,12 +4,24 @@ const operatorButtons = document.querySelectorAll('[data-operator]');
 const dotButton = document.querySelector('[data-dot]');
 const clearButton = document.querySelector('[data-clear]');
 const deleteButton = document.querySelector('[data-delete]');
+const equalsButton = document.querySelector('[data-equals]');
 
 numberButtons.forEach(btn => btn.onclick = _ => appendNumber(btn.textContent));
 operatorButtons.forEach(btn => btn.onclick = _ => appendOperator(btn.textContent));
 dotButton.onclick = _ => appendDot(dotButton.textContent);
 clearButton.onclick = clearDisplay;
 deleteButton.onclick = deleteLastChar;
+equalsButton.onclick = _ => display.textContent = calculate();
+
+function calculate(){
+    try{
+        const formatedExpression = display.textContent.replaceAll('÷', '/');
+        return eval(formatedExpression);
+    }
+    catch(e){
+        return "Erro de formatação!";
+    }
+}
 
 function appendNumber(number){
     display.textContent += number;

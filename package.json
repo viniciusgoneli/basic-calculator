@@ -1,0 +1,19 @@
+{
+  "name": "@viniciusgoneli/basic-calculator",
+  "version": "1.0.0",
+  "description": "Calculadora básica.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viniciusgoneli/basic-calculator.git"
+  },
+  "author": "Vinicius Goneli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/viniciusgoneli/basic-calculator/issues"
+  },
+  "homepage": "https://github.com/viniciusgoneli/basic-calculator#readme"
+}

@@ -6,3 +6,6 @@ A basic calculator made using HTML, CSS and Javascript.
 
 It's basic, but it's well polished.
 I learned a lot from this project. In it I applied clean code techniques and learned how to fix many bugs I had in the process. For those who are interested in suggesting improvements, I am glad to accept them.
+
+You can test this project on Netlify:
+https://viniciusgoneli-basic-calculator.netlify.app/

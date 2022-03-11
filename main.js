@@ -13,9 +13,11 @@ clearButton.onclick = clearDisplay;
 deleteButton.onclick = deleteLastChar;
 equalsButton.onclick = _ => display.textContent = calculate();
 
+const operatorsRegex = /\+|\-|\÷|\*|\//g
+
 function calculate(){
     try{
-        const formatedExpression = display.textContent.replaceAll('÷', '/');
+        const formatedExpression = formatExpressionToCalculate();
         return eval(formatedExpression);
     }
     catch(e){
@@ -50,7 +52,7 @@ function appendDot(dot){
 }
 
 function isDotAllowed(dot){
-    const operands = display.textContent.split(/\+|\-|\÷|\*/);
+    const operands = getOperands();
     const lastOperand = operands[operands.length - 1];
     if(lastOperand.includes(dot)) return false;
     return true;
@@ -59,3 +61,36 @@ function isDotAllowed(dot){
 function clearDisplay(){
     display.textContent = '';
 }
+
+function formatExpressionToCalculate(){
+    let newExpression = display.textContent;
+
+    newExpression = removeLeadingZeros();
+    newExpression = newExpression.replaceAll('÷', '/');
+
+    return newExpression;
+}
+
+function removeLeadingZeros(){
+    const operands = getOperands();
+    const operators = display.textContent.match(operatorsRegex);
+
+    const formatedOperands = operands.map(operand => {
+        for(let i=0; i < operand.length; i++){
+            if(operand[i] != '0') return operand.slice(i);
+        }
+    })
+
+    const formatedExpression = joinOperandsWithOperators(formatedOperands, operators)
+    return formatedExpression;
+}
+
+function joinOperandsWithOperators(operands, operators){
+    let formatedExpression = '';
+    operands.forEach((operand, index) => {
+        formatedExpression += operators[index] === undefined ? operand : operand + operators[index];
+    })
+    return formatedExpression;
+}
+
+const getOperands = _ => display.textContent.split(operatorsRegex);

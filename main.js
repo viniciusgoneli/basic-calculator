@@ -21,7 +21,7 @@ function calculate(){
         return eval(formatedExpression);
     }
     catch(e){
-        return "Erro de formatação!";
+        return display.textContent;
     }
 }
 
@@ -79,6 +79,7 @@ function removeLeadingZeros(){
         for(let i=0; i < operand.length; i++){
             if(operand[i] != '0') return operand.slice(i);
         }
+        return '0';
     })
 
     const formatedExpression = joinOperandsWithOperators(formatedOperands, operators)

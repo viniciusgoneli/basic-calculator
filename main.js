@@ -2,14 +2,14 @@ const display = document.querySelector('.display');
 const numberButtons = document.querySelectorAll('[data-number]');
 const operatorButtons = document.querySelectorAll('[data-operator]');
 const dotButton = document.querySelector('[data-dot]');
-const clearButton = document.querySelector('[data-clear]');
+const resetButton = document.querySelector('[data-reset]');
 const deleteButton = document.querySelector('[data-delete]');
 const equalsButton = document.querySelector('[data-equals]');
 
 numberButtons.forEach(btn => btn.onclick = _ => appendNumber(btn.textContent));
 operatorButtons.forEach(btn => btn.onclick = _ => appendOperator(btn.textContent));
 dotButton.onclick = _ => appendDot(dotButton.textContent);
-clearButton.onclick = clearDisplay;
+resetButton.onclick = resetDisplay;
 deleteButton.onclick = deleteLastChar;
 equalsButton.onclick = _ => display.textContent = calculate();
 
@@ -26,21 +26,22 @@ function calculate(){
 }
 
 function appendNumber(number){
+    if(display.textContent === '0') deleteLastChar();
     display.textContent += number;
 }
 
 function appendOperator(operator){
     if(operator === '*' || operator === '÷' || operator === '+'){
-        if(display.textContent === '' || isLastCharAnOperator() && display.textContent.length === 1) return
+        if(display.textContent === '0') return
     }
-    if(isLastCharAnOperator()) deleteLastChar();
-    
-    display.textContent += operator;
-}
-
-function isLastCharAnOperator(){
     const lastChar = display.textContent.charAt(display.textContent.length - 1);
-    return lastChar === '+' || lastChar === '-' || lastChar === '÷' || lastChar === '*';
+
+    if(operator === lastChar) return
+    if(lastChar === '+' && operator === '-' || lastChar === '-' && operator === '+'
+    || lastChar === '÷' && operator === '*' || lastChar === '*' && operator === '÷') deleteLastChar();
+    if(display.textContent === '0') deleteLastChar();
+
+    display.textContent += operator;
 }
 
 function deleteLastChar(){
@@ -58,8 +59,8 @@ function isDotAllowed(dot){
     return true;
 }
 
-function clearDisplay(){
-    display.textContent = '';
+function resetDisplay(){
+    display.textContent = '0';
 }
 
 function formatExpressionToCalculate(){
@@ -79,7 +80,7 @@ function removeLeadingZeros(){
         for(let i=0; i < operand.length; i++){
             if(operand[i] != '0') return operand.slice(i);
         }
-        return '0';
+        return '';
     })
 
     const formatedExpression = joinOperandsWithOperators(formatedOperands, operators)
